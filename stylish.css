@@ -18,13 +18,122 @@ header h2 {
 .request {
   color: white;
 }
-
 .wrap {
   width: 100%;
-  padding: 10px;
+  padding: 5vw;
   max-width: 600px;
   box-sizing: border-box;
   margin: 0 auto;
+}
+
+/* Animations */
+
+
+.fadein {
+  height: 60px;
+  width: 150px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.fadein img {
+    width: 150px;
+    position:absolute;
+    top:15px;
+    -webkit-animation-name: fade;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-duration: 3s;
+    animation-name: fade;
+    animation-iteration-count: infinite;
+    animation-duration: 3s;
+}
+
+@-webkit-keyframes fade {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    33% {opacity: 1;}
+    53% {opacity: 0;}
+    100% {opacity: 0;}
+}
+@keyframes fade {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    33% {opacity: 1;}
+    53% {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+#f1 {
+  animation: none;
+}
+#f2 {
+    -webkit-animation-delay: -1s;
+}
+#f3 {
+    -webkit-animation-delay: -.5s;
+}
+#f4 {
+    -webkit-animation-delay: -.1s;
+}
+
+.scaleIn {
+	opacity: 1;
+	animation-name: scaleInSize;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: .2s;
+}
+@keyframes scaleInSize {
+	0% { opacity: 0; transform: scale(0.5); }
+	100% { opacity: 1; transform: scale(1); }
+}
+.fallIn {
+	opacity: 1;
+	animation-name: fallInAnimation;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: .4s;
+    position: relative;
+}
+@keyframes fallInAnimation {
+	0% { opacity: 0; top: -50px; }
+	100% { opacity: 1; top: 0; }
+}
+
+/* form */
+
+form {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+input {-webkit-appearance: none; box-shadow: none !important; }
+form input, form select {
+  box-sizing: border-box;
+  border-radius:4px;
+  width: 100%;
+  padding: 5vw;
+  margin-top: 10px;
+  outline: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3.5vw;
+  font-weight: bold;
+}
+.submit {
+  background-color: #0062ff; 
+  color: white;
+  border: none;
+  font-weight: bold;
+}
+#name, #password, select {
+  border: 1px solid lightgrey;
+  color: grey;
+}
+#name:focus , #password:focus, select:focus {
+  border: 1px solid #0062ff;
+}
+form select {
+  width: 100%;
 }
 
 /* Dashboard */
@@ -68,11 +177,11 @@ header img {
   flex-shrink: 0;
   width: 70%;
   height: 25vh ;
-  margin-right: 10px;
+  margin-right: 5vw;
   position: relative;
 }
 .wrapScroll p {
-  margin-left: 10px;
+  margin-left: 5vw;
 }
 .request p {
   font-weight: normal;
@@ -95,15 +204,35 @@ header img {
   background-image: linear-gradient(to top right, #fbb040, #ef4136);
 }
 .query, .pain, .sanitery {
-  margin-right: 10px;
+  margin-right: 5vw;
 }
 .query {
   background-image: linear-gradient(to top right, #57a249, #a1dd47);
-  margin-left: 10px;
+  margin-left: 5vw;
 }
 .pain {
   background-image: linear-gradient(to top right, #e44252, #b4172c);
 }
 .sanitery {
   background-image: linear-gradient(to top right, #0890e4, #13cde7);
+}
+
+.informationWrap {
+  display: flex;
+}
+
+.information {
+  background-image: linear-gradient(to top right, #57a249, #a1dd47);
+  height: 80px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.information:nth-child(odd) {
+  margin-right: 10px;
+}
+
+.cancel {
+  background-image: linear-gradient(to top right, #e44252, #b4172c);
+  height: 60px;
+  padding: 7px;
 }
