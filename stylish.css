@@ -22,7 +22,7 @@ header h2 {
 .wrap {
   width: 100%;
   padding: 10px;
-  max-width: 300px;
+  max-width: 500px;
   box-sizing: border-box;
   margin: 0 auto;
 }
