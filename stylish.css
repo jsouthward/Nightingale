@@ -1,0 +1,102 @@
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #ffffff;
+}
+
+a {color: white;text-align: center;}
+h1 {font-family: 'Calistoga', cursive;color: white;margin: 0 auto;
+padding-bottom: 10%;padding-top: 20%;text-align: center;}
+h2 {font-size: 100%;text-align: center;}
+p {font-size: 80%;font-weight: bold;}
+.accentColor { color: #0062ff; text-align: center;}
+
+header h2 {
+  text-align: left;
+}
+
+.request {
+  color: white;
+}
+
+.wrap {
+  width: 100%;
+  padding: 10px;
+  max-width: 300px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+.wrapScroll {
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+header {
+  text-align: left;
+}
+
+.slides {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+.requestSlider {
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+}
+.request {
+  background-color: #0062ff;
+  box-sizing: border-box;
+  padding: 5px 15px;;
+  border-radius: 12px;
+  height: 130px
+}
+.slides > div {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 70%;
+  height: 130px ;
+  margin-right: 10px;
+  position: relative;
+}
+.wrapScroll p {
+  margin-left: 10px;
+}
+.request p {
+  font-weight: normal;
+  margin: 0 ;
+  text-align: left;
+}
+
+.request img {
+  height: 42px;
+  width: 100%;
+  object-fit: contain;
+}
+.request h2 {
+  margin-top: -5px
+}
+
+.emergency {
+  width: 100%;
+  background-image: linear-gradient(to top right, #fbb040, #ef4136);
+}
+.query, .pain, .sanitery {
+  margin-right: 10px;
+}
+.query {
+  background-image: linear-gradient(to top right, #57a249, #a1dd47);
+  margin-left: 10px;
+}
+.pain {
+  background-image: linear-gradient(to top right, #e44252, #b4172c);
+}
+.sanitery {
+  background-image: linear-gradient(to top right, #0890e4, #13cde7);
+}
