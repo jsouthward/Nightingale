@@ -6,10 +6,12 @@ body {
 
 a {color: white;text-align: center;}
 h1 {font-family: 'Calistoga', cursive;color: white;margin: 0 auto;
-padding-bottom: 10%;padding-top: 20%;text-align: center;}
+padding-bottom: 8vh;padding-top: 10vh; padding-left:  12vw;text-align: center;}
 h2 {font-size: 5vw;text-align: center;}
 p {font-size: 3.5vw;font-weight: bold;}
 .accentColor { color: #0062ff; text-align: center;}
+.requestLink { text-decoration: none; }
+.activityLink { text-decoration: none; text-align: left; color: black; }
 
 header h2 {
   text-align: left;
@@ -100,6 +102,13 @@ header h2 {
 }
 
 /* form */
+
+.birdLogo {
+  position: absolute;
+  top: 12vh;
+  left: 8vh;
+  height: 10vh;
+}
 
 form {
   background: white;
@@ -223,7 +232,7 @@ header img {
 
 .information {
   background-image: linear-gradient(to top right, #57a249, #a1dd47);
-  height: 80px;
+  height: 20vh;
   width: 100%;
   margin-bottom: 10px;
 }
@@ -233,6 +242,145 @@ header img {
 
 .cancel {
   background-image: linear-gradient(to top right, #e44252, #b4172c);
-  height: 60px;
-  padding: 7px;
+  height: 10vh;
+  padding: 2.5vh;
+}
+
+/* Staff Dashboard */
+
+
+nav {
+  display: flex;
+  justify-content: space-between;
+}
+nav * {
+  padding: 10px;
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+}
+
+.staffRequest {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.staffRequestInfo {
+  width: 30vw;
+}
+.staffRequest p {
+  font-weight: normal;
+  line-height: 4px;
+}
+
+.time {
+  background: #0062ff;
+  color: white;
+  padding: 0px 10px;
+  border-radius: 12px;
+}
+
+.requestIcon {
+  background-image: linear-gradient(to top right, #fbb040, #ef4136);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+
+
+/* Staff Analytics */
+
+.requestIcon {
+  background-image: linear-gradient(to top right, #fbb040, #ef4136);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+
+.staffAnalytics {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.staffAnalytics p {
+  font-weight: normal;
+  line-height: 4px;
+}
+
+.analyticValue {
+  background: #0062ff;
+  color: white;
+  padding: 0px 10px;
+  border-radius: 12px;
+}
+.analyticValue2 {
+  color: white;
+  padding: 0px 10px;
+  border-radius: 12px;
+  background: #a1dd47;
+}
+.analyticValue3 {
+  color: white;
+  padding: 0px 10px;
+  border-radius: 12px;
+  background: #ef4136;
+}
+
+/* staff request */
+
+.fullHeader img {
+  height: 42px;
+  width: 100%;
+  object-fit: contain;
+  margin-top: 20px;
+}
+.fullHeader h2 {
+  color: white;
+  margin-top: 0px;
+  margin-bottom: 10vh;
+  text-align: center;
+}
+
+.fullRequest {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+}
+.fullWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.fullRequest .time {
+  background: #0062ff;
+  color: white;
+  padding: 0px 10px;
+  border-radius: 12px;
+  line-height: 4px;
+  margin-bottom: 2vh;
+}
+
+.acceptRequest {
+  background-color: #0062ff; 
+  padding: 5vw;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius:4px;
+}
+
+.delete{
+  background-color: #e44242; 
+  color: white;
+  border: none;
+  padding: 5vw;
+  font-weight: bold;
+  width: 40%;
+  margin-left: 1vw;
+  border-radius:4px;
 }
