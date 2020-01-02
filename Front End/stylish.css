@@ -269,6 +269,8 @@ nav a {
 }
 .staffRequestInfo {
   width: 30vw;
+  flex-grow: 2;
+  padding-left: 5vw;
 }
 .staffRequest p {
   font-weight: normal;
@@ -350,6 +352,9 @@ nav a {
   border-radius: 12px;
   padding: 15px;
 }
+.fullRequest p {
+  font-weight: normal!important;
+}
 .fullWrap {
   display: flex;
   justify-content: space-between;
@@ -372,6 +377,9 @@ nav a {
   border: none;
   font-weight: bold;
   border-radius:4px;
+  font-size: 3.5vw;
+  flex-grow: 2;
+  margin-top: 2.5vh;
 }
 
 .delete{
@@ -383,4 +391,5 @@ nav a {
   width: 40%;
   margin-left: 1vw;
   border-radius:4px;
-}
+  font-size: 3.5vw;
+  margin-top: 2.5vh;
