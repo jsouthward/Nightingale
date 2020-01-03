@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="stylish.css">
   <link href="https://fonts.googleapis.com/css?family=Calistoga|Montserrat:400,700&display=swap" rel="stylesheet">
 </head>
-
 <body class="fallIn">
   
   <header class="wrap">
@@ -47,7 +46,9 @@
   </div>
   
   <section class="request cancel">
-    <h2>Cancel Request</h2>
+    <a href="deleteRequest.php" onclick="return confirm('Are you sure you want to remove your request?');">
+      <h2>Cancel Request</h2>
+    </a>
   </section>
   
 </main>

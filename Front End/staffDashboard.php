@@ -23,36 +23,11 @@
     <main class= "wrap">
     <?php
       require_once('functions.php');
-      try{
-        $dbConn = getConnection();
-        //Query to retrieve events
-        $sqlRequests = "SELECT taskID, acceptedBy, timeCreated, timeAccepted, location, user, requestType
-          FROM nightingale_alert
-          ORDER BY timeCreated";
-        $queryRequestsResult = $dbConn->query($sqlRequests);
-
-        while ($rowObj = $queryRequestsResult->fetchObject()){
-          //Get Time elapsed 
-          $minutes = getTimeElasped($rowObj->timeCreated);
-          //Display Request info
-          echo "
-          <a class='activityLink' href='staffRequest.php?taskID={$rowObj->taskID}'>
-            <section class='staffRequest'>
-              <div class='requestIcon'>
-                <img src='https://i.imgur.com/h1Rt1Fb.png'/>
-              </div>
-            <div class='staffRequestInfo'>
-          ";
-          echo "<p><b>Room: {$rowObj->location}</b></p>";
-          echo "<p>Patient: {$rowObj->user}</p>";
-          echo "<p>Request: {$rowObj->requestType}</p>";                
-          echo "</div><span class='time'><p>{$minutes}</p></span>";
-          echo "</section></a>";
-        }//end while
-      }//end try
-      catch (Exception $e){
-        echo "<p>Query failed: ".$e->getMessage()."</p>\n";
-      }//end catch
+      
+      // replace with sessions
+      $acceptedBy = "Staff Test Name";
+      getAcceptedTasks($acceptedBy);
+      getTasks();
     ?>
 
     </main>

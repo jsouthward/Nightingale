@@ -284,6 +284,13 @@ nav a {
   border-radius: 12px;
 }
 
+.acceptedTime {
+  background: #57a249;
+  color: white;
+  padding: 0px 10px;
+  border-radius: 12px;
+}
+
 .requestIcon {
   background-image: linear-gradient(to top right, #fbb040, #ef4136);
   width: 42px;
@@ -323,7 +330,7 @@ nav a {
   color: white;
   padding: 0px 10px;
   border-radius: 12px;
-  background: #a1dd47;
+  background: #57a249;
 }
 .analyticValue3 {
   color: white;
@@ -388,8 +395,8 @@ nav a {
   border: none;
   padding: 5vw;
   font-weight: bold;
-  width: 40%;
   margin-left: 1vw;
   border-radius:4px;
   font-size: 3.5vw;
   margin-top: 2.5vh;
+  flex-grow: 1;

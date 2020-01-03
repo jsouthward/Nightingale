@@ -12,7 +12,6 @@
     body {
       background-image: linear-gradient(to bottom left, #fbb040, #ef4136);
       height: 100vh;
-      
     }
   </style>
 </head>
@@ -23,13 +22,14 @@
     <img src="https://i.imgur.com/h1Rt1Fb.png"/>
     <h2>EMERGENCY</h2>
   </header>
-  <main class="fullRequest scaleIn">
-    
+  
   <?php
   require_once('functions.php');
   try{
     $dbConn = getConnection();
+    // WARNING CHANGE THIS SQL INJECTION RISK!!!
     $taskID = isset($_REQUEST['taskID']) ? $_REQUEST['taskID'] : null;
+    
     //Query to retrieve events
     $sqlRequests = "SELECT taskID, acceptedBy, timeCreated, timeAccepted, location, user, requestType
       FROM nightingale_alert
@@ -41,13 +41,39 @@
       //Get Time elapsed 
       $minutes = getTimeElasped($rowObj->timeCreated);
       //Display Request info 
-      echo "<div class='fullWrap'>
-        <span class='time'><p><b>{$minutes}</b></p></span>
-      </div>
-      <p>Room Number: <b>{$rowObj->location}</b></p>
-      <p>Patient Name: <b>{$rowObj->user}</b></p>
-      <p>Request Type: <b>{$rowObj->requestType}</b></p>
-      <p>Accepted?</p>";
+      echo "
+      <main class='fullRequest scaleIn'>
+        <div class='fullWrap'>
+          <span class='time'><p><b>{$minutes}</b></p></span>
+        </div>
+        <p>Room Number: <b>{$rowObj->location}</b></p>
+        <p>Patient Name: <b>{$rowObj->user}</b></p>
+        <p>Request Type: <b>{$rowObj->requestType}</b></p>
+        ";
+        $accepted = $rowObj->acceptedBy;
+        //request has NOT been accepted
+        if (!empty($accepted)){
+          echo "
+          <p>Accepted by: <b>{$rowObj->acceptedBy}</b></p>
+          <div class='fullWrap'>
+          <a href='completeRequest.php?taskID={$rowObj->taskID}'>
+            <input class='acceptRequest' type='submit' value='Request Completed'>
+          </a>
+          <a href='deleteRequest.php?taskID={$rowObj->taskID}'>
+            <input class='delete' type='submit' value='Delete'>
+          </a></div></main>";  
+        }//end if
+      //request has allready been accepted 
+      else {
+        echo "
+        <div class='fullWrap'>
+        <a href='acceptRequest.php?taskID={$rowObj->taskID}'>
+          <input class='acceptRequest' type='submit' value='Accept Request'>
+        </a>
+        <a href='deleteRequest.php?taskID={$rowObj->taskID}'>
+          <input class='delete' type='submit' value='Delete'>
+        </a></div></main>"; 
+      }//end else
     }//end while
   }//end try
   catch (Exception $e){
@@ -55,11 +81,7 @@
   }//end catch
 ?>
     
-    <div class="fullWrap">
-      <input class="acceptRequest" type="submit" value="Accept Request">
-      <input class="delete" type="submit" value="Delete">
-    </div>
-  </main>
+    
   <a href="staffDashboard.php"><p> Back to Dashboard</p></a>
 </main>
     

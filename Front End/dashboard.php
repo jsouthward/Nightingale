@@ -17,7 +17,7 @@
     <p>Please use the buttons to let a member of staff know you need something.
   </header>
   <main class= "userDash wrap">
-    <a class="requestLink" href="userRequest.html">
+    <a class="requestLink" href="createRequest.php?request=Emergency">
       <section class="request emergency">
         <img src="https://i.imgur.com/h1Rt1Fb.png"/>
         <h2>EMERGENCY</h2>
