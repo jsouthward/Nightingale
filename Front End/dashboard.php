@@ -12,7 +12,7 @@
 
 <body class="fallIn">
   <header class="wrap">
-    <img src="https://i.imgur.com/0DVcOQv.png"/>
+    <img src="https://i.imgur.com/jTlkSyj.png"/>
     <h2>Hello Jake,</h2> 
     <p>Please use the buttons to let a member of staff know you need something.
   </header>

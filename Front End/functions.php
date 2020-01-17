@@ -31,7 +31,7 @@ function getTasks(){
   try{
     $dbConn = getConnection();
     //Query to retrieve events 
-    $sqlRequests = "SELECT taskID, acceptedBy, timeCreated, timeAccepted, timeCompleted location, user, requestType
+    $sqlRequests = "SELECT taskID, acceptedBy, timeCreated, timeAccepted, timeCompleted, location, user, requestType
       FROM nightingale_alert
       WHERE timeCompleted IS NULL 
       AND timeAccepted IS NULL
@@ -66,7 +66,7 @@ function getAcceptedTasks($acceptedBy) {
   try {
   $dbConn = getConnection($acceptedBy);
     //Query to retrieve events 
-    $sqlRequests = "SELECT taskID, acceptedBy, timeCreated, timeAccepted, timeCompleted location, user, requestType
+    $sqlRequests = "SELECT taskID, acceptedBy, timeCreated, timeAccepted, timeCompleted, location, user, requestType
       FROM nightingale_alert
       WHERE acceptedBy = '$acceptedBy' 
       AND timeCompleted IS NULL
@@ -80,8 +80,8 @@ function getAcceptedTasks($acceptedBy) {
       echo "
       <a class='activityLink' href='staffRequest.php?taskID={$rowObj->taskID}'>
         <section class='staffRequest'>
-          <div class='requestIcon'>
-            <img src='https://i.imgur.com/h1Rt1Fb.png'/>
+          <div class='acceptedRequestIcon'>
+            <img src='https://i.imgur.com/IqWX5sf.png'/>
           </div>
         <div class='staffRequestInfo'>
       ";

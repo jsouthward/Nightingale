@@ -40,7 +40,7 @@
     while ($rowObj = $queryRequestsResult->fetchObject()){
       //Get Time elapsed 
       $minutes = getTimeElasped($rowObj->timeCreated);
-      //Display Request info 
+      //Display Request info if task is available 
       echo "
       <main class='fullRequest scaleIn'>
         <div class='fullWrap'>
@@ -57,9 +57,9 @@
           <p>Accepted by: <b>{$rowObj->acceptedBy}</b></p>
           <div class='fullWrap'>
           <a href='completeRequest.php?taskID={$rowObj->taskID}'>
-            <input class='acceptRequest' type='submit' value='Request Completed'>
+            <input class='completeRequest' type='submit' value='Request Completed'>
           </a>
-          <a href='deleteRequest.php?taskID={$rowObj->taskID}'>
+          <a onclick='return confirm('Are you sure you want to remove request?');' href='deleteRequest.php?taskID={$rowObj->taskID}'>
             <input class='delete' type='submit' value='Delete'>
           </a></div></main>";  
         }//end if
@@ -70,7 +70,7 @@
         <a href='acceptRequest.php?taskID={$rowObj->taskID}'>
           <input class='acceptRequest' type='submit' value='Accept Request'>
         </a>
-        <a href='deleteRequest.php?taskID={$rowObj->taskID}'>
+        <a onclick='return confirm('Are you sure you want to remove request?');' href='deleteRequest.php?taskID={$rowObj->taskID}'>
           <input class='delete' type='submit' value='Delete'>
         </a></div></main>"; 
       }//end else

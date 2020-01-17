@@ -160,10 +160,14 @@ header {
 header img {
   width: 15vw;
 }
+header .wrap {
+  padding-bottom: 0;
+}
 
 .slides {
   display: flex;
   overflow-x: auto;
+  margin-bottom: 2.5vh;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -297,6 +301,12 @@ nav a {
   height: 42px;
   border-radius: 12px;
 }
+.acceptedRequestIcon {
+  background-image: linear-gradient(to top right, #a1dd47, #57a249);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
 
 
 /* Staff Analytics */
@@ -379,6 +389,18 @@ nav a {
 
 .acceptRequest {
   background-color: #0062ff; 
+  padding: 5vw;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius:4px;
+  font-size: 3.5vw;
+  flex-grow: 2;
+  margin-top: 2.5vh;
+}
+
+.completeRequest {
+  background-color: #57a249; 
   padding: 5vw;
   color: white;
   border: none;

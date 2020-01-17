@@ -14,7 +14,7 @@
   <header class="wrap">
       <nav>
         <a href="staffDashboard.html"><p>Activity</p></a>
-        <img class="fallIn" src="https://i.imgur.com/0DVcOQv.png"/>
+        <img class="fallIn" src="https://i.imgur.com/jTlkSyj.png"/>
         <a href="staffAnalytics.html"><p>Analytics</p></a>
       </nav>
       <h2>Hello Jake,</h2> 

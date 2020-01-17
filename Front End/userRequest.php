@@ -46,7 +46,7 @@
   </div>
   
   <section class="request cancel">
-    <a href="deleteRequest.php" onclick="return confirm('Are you sure you want to remove your request?');">
+    <a href="userDeleteRequest.php" onclick="return confirm('Are you sure you want to remove your request?');">
       <h2>Cancel Request</h2>
     </a>
   </section>
