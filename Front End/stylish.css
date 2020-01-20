@@ -311,8 +311,26 @@ nav a {
 
 /* Staff Analytics */
 
-.requestIcon {
+.requestIcon1 {
   background-image: linear-gradient(to top right, #fbb040, #ef4136);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+.requestIcon2 {
+  background-image: linear-gradient(to top right, #fbb040, #ef4136);  
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+.requestIcon3 {
+  background-image: linear-gradient(to top right, #e44252, #b4172c);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+.requestIcon4 {
+  background-image: linear-gradient(to top right, #0890e4, #13cde7); 
   width: 42px;
   height: 42px;
   border-radius: 12px;

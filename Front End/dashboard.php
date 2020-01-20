@@ -31,19 +31,25 @@
     <section class="requestSlider">
       <div class="slides">
         <div class="request query">
-          <img src="https://i.imgur.com/38YTXzi.png"/>
-          <h2>Staff Query</h2>
-          <p>Have a question for a member of staff?</p> 
+          <a class="requestLink" href="createRequest.php?request=Query">
+            <img src="https://i.imgur.com/38YTXzi.png"/>
+            <h2>Staff Query</h2>
+            <p>Have a question for a member of staff?</p> 
+          </a>
         </div>
         <div class="request sanitery">
-          <img src="https://i.imgur.com/Db59u3D.png"/>
-          <h2>Sanitery help</h2>
-          <p>Need a member of staff to help you use the toilet?</p> 
+          <a class="requestLink" href="createRequest.php?request=Sanitery">
+            <img src="https://i.imgur.com/Db59u3D.png"/>
+            <h2>Sanitery help</h2>
+            <p>Need a member of staff to help you use the toilet?</p> 
+          </a>
         </div>
         <div class="request pain">
-          <img src="https://i.imgur.com/9fZqWrN.png"/>
-          <h2>Pain Relief</h2>
-          <p>Expiriencing pain or have a question about pain relief?</p> 
+          <a class="requestLink" href="createRequest.php?request=Pain">
+            <img src="https://i.imgur.com/9fZqWrN.png"/>
+            <h2>Pain Relief</h2>
+            <p>Expiriencing pain or have a question about pain relief?</p> 
+          </a>
         </div>
       </div>
     </section>

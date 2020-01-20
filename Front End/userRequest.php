@@ -25,8 +25,10 @@
   
   <div class="informationWrap">
     <section class="request information">
-      <img src="https://i.imgur.com/KaAmcUG.png"/>
-      <h2>Staff Query</h2>
+      <a href="modifyRequest.php?Info=Query">
+        <img src="https://i.imgur.com/KaAmcUG.png"/>
+        <h2>Staff Query</h2>
+      </a>
     </section>
     <section class="request information">
       <img src="https://i.imgur.com/4O09uAm.png"/>

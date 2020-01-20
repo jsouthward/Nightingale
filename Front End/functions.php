@@ -10,7 +10,7 @@ function getConnection() {
   }
 }
 
-// Function Time elapsed
+// Function Time elapsed, display time in mins between two timestams
 function getTimeElasped($start_time) {
   $since_start = time() - $start_time;
   $minutes = round( $since_start / 60); 
@@ -27,10 +27,11 @@ function getTimeElasped($start_time) {
   return $minutes;
 }
 
+//get list of tasks 
 function getTasks(){
   try{
     $dbConn = getConnection();
-    //Query to retrieve events 
+    //Query to retrieve events that have not been accepted
     $sqlRequests = "SELECT taskID, acceptedBy, timeCreated, timeAccepted, timeCompleted, location, user, requestType
       FROM nightingale_alert
       WHERE timeCompleted IS NULL 
@@ -44,12 +45,30 @@ function getTasks(){
       //Display Request info
       echo "
       <a class='activityLink' href='staffRequest.php?taskID={$rowObj->taskID}'>
-        <section class='staffRequest'>
-          <div class='requestIcon'>
-            <img src='https://i.imgur.com/h1Rt1Fb.png'/>
-          </div>
-        <div class='staffRequestInfo'>
-      ";
+        <section class='staffRequest'>";
+      //Task Icon based on request type 
+      if ($rowObj->requestType == 'Emergency') {
+        echo "
+        <div class='requestIcon1'>
+          <img src='images/request1.png'/>
+        </div>";
+      } elseif ($rowObj->requestType == 'Query'){
+        echo "
+        <div class='requestIcon2'>
+          <img src='images/request2.png'/>
+        </div>";
+      } elseif ($rowObj->requestType == 'Sanitery'){
+        echo "
+        <div class='requestIcon4'>
+          <img src='images/request4.png'/>
+        </div>";
+      } elseif ($rowObj->requestType == 'Pain'){
+        echo "
+        <div class='requestIcon3'>
+          <img src='images/request3.png'/>
+        </div>";
+      };
+      echo "<div class='staffRequestInfo'>";
       echo "<p><b>Room: {$rowObj->location}</b></p>";
       echo "<p>Patient: {$rowObj->user}</p>";
       echo "<p>Request: {$rowObj->requestType}</p>";                
@@ -91,6 +110,7 @@ function getAcceptedTasks($acceptedBy) {
       echo "</div><span class='acceptedTime'><p>{$minutes}</p></span>";
       echo "</section></a>";
     }//end while
+    echo "<hr>";
   }//end try
   catch (Exception $e){
     echo "<p>Query failed: ".$e->getMessage()."</p>\n";
