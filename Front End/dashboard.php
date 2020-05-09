@@ -1,3 +1,11 @@
+<?php 
+session_start();
+if(!isset($_SESSION["userID"])){
+  header("location:login.php");
+  die();
+}
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,47 +21,29 @@
 <body class="fallIn">
   <header class="wrap">
     <img src="https://i.imgur.com/jTlkSyj.png"/>
-    <h2>Hello Jake,</h2> 
+    <?php echo '<h2>Hello '.$_SESSION["firstName"].'</h2>'; ?>
     <p>Please use the buttons to let a member of staff know you need something.
   </header>
+  
+  
+  
   <main class= "userDash wrap">
-    <a class="requestLink" href="createRequest.php?request=Emergency">
+    <a class="requestLink" href="createRequest.php?request=1">
       <section class="request emergency">
         <img src="https://i.imgur.com/h1Rt1Fb.png"/>
         <h2>EMERGENCY</h2>
         <p>Please only press this if you are in need of urgent staff attention.</p>
       </section>
     </a>
-
   </main>
-  <aside class="wrapScroll"> 
-    <p>Non Emeregency Requests</p>
-    <section class="requestSlider">
-      <div class="slides">
-        <div class="request query">
-          <a class="requestLink" href="createRequest.php?request=Query">
-            <img src="https://i.imgur.com/38YTXzi.png"/>
-            <h2>Staff Query</h2>
-            <p>Have a question for a member of staff?</p> 
-          </a>
-        </div>
-        <div class="request sanitery">
-          <a class="requestLink" href="createRequest.php?request=Sanitery">
-            <img src="https://i.imgur.com/Db59u3D.png"/>
-            <h2>Sanitery help</h2>
-            <p>Need a member of staff to help you use the toilet?</p> 
-          </a>
-        </div>
-        <div class="request pain">
-          <a class="requestLink" href="createRequest.php?request=Pain">
-            <img src="https://i.imgur.com/9fZqWrN.png"/>
-            <h2>Pain Relief</h2>
-            <p>Expiriencing pain or have a question about pain relief?</p> 
-          </a>
-        </div>
-      </div>
-    </section>
-  </aside>
+  
+  <?php 
+  $locationID = $_SESSION["locationID"]; //change to session data
+  
+  require_once('functions.php');
+  //get request options
+  echo getRequests($locationID);
+  ?>
     
 </body>
 </html>

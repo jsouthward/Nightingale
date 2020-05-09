@@ -30,11 +30,28 @@
     // WARNING CHANGE THIS SQL INJECTION RISK!!!
     $taskID = isset($_REQUEST['taskID']) ? $_REQUEST['taskID'] : null;
     
-    //Query to retrieve events
-    $sqlRequests = "SELECT taskID, acceptedBy, timeCreated, timeAccepted, location, user, requestType
+    $staffLocationID = '1';//change me! 
+    
+    $sqlRequests = "
+      SELECT 
+        nightingale_alert.taskID, 
+        nightingale_alert.staffID, 
+        nightingale_alert.timeCreated, 
+        nightingale_alert.timeAccepted, 
+        nightingale_alert.timeCompleted, 
+        nightingale_user.roomNo, 
+        nightingale_user.firstName, 
+        nightingale_user.lastName,
+        nightingale_request.requestName
+        
       FROM nightingale_alert
+        INNER JOIN nightingale_user ON nightingale_alert.userID=nightingale_user.userID
+        INNER JOIN nightingale_location ON nightingale_alert.locationID=nightingale_location.locationID
+        LEFT JOIN nightingale_request ON nightingale_alert.requestID=nightingale_request.requestID
       WHERE taskID = '$taskID'
-      ORDER BY timeCreated";
+      AND nightingale_alert.locationID = '$staffLocationID'
+      ORDER BY timeCreated
+    ";
     $queryRequestsResult = $dbConn->query($sqlRequests);
 
     while ($rowObj = $queryRequestsResult->fetchObject()){
@@ -46,15 +63,15 @@
         <div class='fullWrap'>
           <span class='time'><p><b>{$minutes}</b></p></span>
         </div>
-        <p>Room Number: <b>{$rowObj->location}</b></p>
-        <p>Patient Name: <b>{$rowObj->user}</b></p>
-        <p>Request Type: <b>{$rowObj->requestType}</b></p>
+        <p>Room Number: <b>{$rowObj->roomNo}</b></p>
+        <p>Patient Name: <b>{$rowObj->firstName} {$rowObj->lastName}</b></p>
+        <p>Request: <b>{$rowObj->requestName}</b></p>
+        
         ";
-        $accepted = $rowObj->acceptedBy;
+        $accepted = $rowObj->timeAccepted;
         //request has NOT been accepted
         if (!empty($accepted)){
           echo "
-          <p>Accepted by: <b>{$rowObj->acceptedBy}</b></p>
           <div class='fullWrap'>
           <a href='completeRequest.php?taskID={$rowObj->taskID}'>
             <input class='completeRequest' type='submit' value='Request Completed'>

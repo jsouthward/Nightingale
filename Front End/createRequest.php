@@ -2,13 +2,14 @@
 //link to functions script
 require_once('functions.php');
 
-// session data will be here 
-$userName = "Jake Test";
-$userLocation = "Block A 001";
+// session data 
+session_start();
+$userID = $_SESSION["userID"];
+$userLocation = $_SESSION["locationID"];
 $currentTime = time();
 
 //get request type
-$requestType = isset($_REQUEST['request']) ? $_REQUEST['request'] : null;
+$requestID = isset($_REQUEST['request']) ? $_REQUEST['request'] : null;
 
 try{
   //add to database
@@ -16,8 +17,8 @@ try{
   // https://stackoverflow.com/questions/4364686/how-do-i-sanitize-input-with-pdo
   $dbConn = getConnection();
   $newTask = "
-    INSERT INTO nightingale_alert (timeCreated, location, user, requestType) 
-    VALUES ('$currentTime','$userLocation','$userName','$requestType');
+    INSERT INTO nightingale_alert (timeCreated, locationID, userID, requestID) 
+    VALUES ('$currentTime','$userLocation','$userID','$requestID');
   ";
   $newTaskQuery = $dbConn->exec($newTask);
   // WARNING CHANGE THIS SQL INJECTION RISK!!!

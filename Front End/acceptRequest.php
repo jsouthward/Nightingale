@@ -3,7 +3,8 @@
 require_once('functions.php');
 
 // session data will be here 
-$StaffName = "Staff Test Name";
+$StaffID = '1';
+
 $currentTime = time();
 
 //get task ID
@@ -16,7 +17,7 @@ try{
   $dbConn = getConnection();
   $editTask = "
     UPDATE nightingale_alert 
-    SET timeAccepted = '$currentTime', acceptedBy = '$StaffName'
+    SET timeAccepted = '$currentTime', staffID = '$StaffID'
     WHERE taskID = '$taskID';
   ";
   $newTaskQuery = $dbConn->exec($editTask);

@@ -28,6 +28,10 @@ header h2 {
   margin: 0 auto;
 }
 
+.splitCol {
+  display: flex;
+}
+
 /* Animations */
 
 
@@ -145,6 +149,26 @@ form select {
   width: 100%;
 }
 
+.loginLinks a {
+  width: 100%;
+  padding: 15px;
+}
+
+.glucoseForm {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#glucose {
+  border: 1px solid lightgrey;
+  color: grey;
+  text-align: center;
+  margin-right: 5px;
+}
+#glucose:focus {
+  border: 1px solid #0062ff;
+}
+
 /* Dashboard */
 
 .wrapScroll {
@@ -152,6 +176,7 @@ form select {
   max-width: 600px;
   box-sizing: border-box;
   margin: 0 auto;
+  padding-left: 5vw;
 }
 
 header {
@@ -184,6 +209,7 @@ header .wrap {
   padding: 5px 15px;;
   border-radius: 12px;
   height: 25vh;
+  margin-right: 5vw;
 }
 .slides > div {
   scroll-snap-align: start;
@@ -192,9 +218,6 @@ header .wrap {
   height: 25vh ;
   margin-right: 5vw;
   position: relative;
-}
-.wrapScroll p {
-  margin-left: 5vw;
 }
 .request p {
   font-weight: normal;
@@ -212,22 +235,22 @@ header .wrap {
   margin-top: 1vh;
 }
 
+.customRequest:nth-child(1) {
+  background-image: linear-gradient(to top right, #57a249, #a1dd47);
+}
+.customRequest:nth-child(2) {
+  background-image: linear-gradient(to top right, #e44252, #b4172c);
+}
+.customRequest:nth-child(3) {
+  background-image: linear-gradient(to top right, #0890e4, #13cde7);
+}
+.customRequest:nth-child(4) {
+  background-image: linear-gradient(to top right, #fbb040, #ef4136);
+}
+
 .emergency {
   width: 100%;
   background-image: linear-gradient(to top right, #fbb040, #ef4136);
-}
-.query, .pain, .sanitery {
-  margin-right: 5vw;
-}
-.query {
-  background-image: linear-gradient(to top right, #57a249, #a1dd47);
-  margin-left: 5vw;
-}
-.pain {
-  background-image: linear-gradient(to top right, #e44252, #b4172c);
-}
-.sanitery {
-  background-image: linear-gradient(to top right, #0890e4, #13cde7);
 }
 
 .informationWrap {
@@ -440,7 +463,68 @@ nav a {
   font-size: 3.5vw;
   margin-top: 2.5vh;
   flex-grow: 1;
+}
 
+/* Admin Table */
+
+.adminTable {
+  width: 100%;
+  border-radius: 12px;
+  border: none;
+  overflow: hidden;
+}  
+
+.adminTable th {
+  padding: 10px;
+  background: #0062ff;
+  color: white;
+}
+.adminTable tr:nth-child(even) {
+  background: #e2e2e2;
+}
+.adminTable tr:nth-child(odd) {
+  background: #c9c9c9;
+}
+.adminTable td {
+  padding: 10px;
+}
+.adminTable a {
+  color: black;
+  text-decoration: underline;
+}
+  
+/* glucose logging chart */
+
+#chartWrap {
+  width: 90vw;
+  overflow: hidden;
+  /*background: #0062ff;*/
+  background: linear-gradient(to top right, #0890e4, #13cde7); 
+  border-radius: 14px;
+}
+
+#chart_div {
+  width: 100vw;
+}
+#chart_div text {
+    fill: #ffffff !important;
+}
+
+.chartControls p {
+  width: 100%;
+  color: black;
+  text-align: center;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  box-sizing: border-box;
+}
+
+.highGlucose {
+  background: #ff554b;
+}
+.safeGlucose {
+  background: #92c754;
+}
 
 @media only screen and (min-width: 600px) {
   
@@ -449,3 +533,4 @@ nav a {
   }
   
 }
+  

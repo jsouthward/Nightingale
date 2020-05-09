@@ -25,8 +25,9 @@
       require_once('functions.php');
       
       // replace with sessions
-      $acceptedBy = "Staff Test Name";
-      getAcceptedTasks($acceptedBy);
+      $acceptedBy = "1";
+      
+      getAcceptedTasks("1");
       getTasks();
     ?>
 

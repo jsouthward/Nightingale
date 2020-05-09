@@ -3,14 +3,15 @@
 require_once('functions.php');
 
 //replace with session user
-$user = "Jake Test";
+session_start();
+$userID = $_SESSION["userID"];
   
 try{
   $dbConn = getConnection();
 
   $deleteTask = "
   DELETE FROM nightingale_alert
-    WHERE user = '$user'
+    WHERE userID = '$userID'
     AND timeCompleted IS NULL
   ";
   $deleteQuery = $dbConn->query($deleteTask);
