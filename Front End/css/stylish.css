@@ -4,9 +4,8 @@ body {
   background-color: #ffffff;
 }
 
-a {color: white;text-align: center;}
-h1 {font-family: 'Calistoga', cursive;color: white;margin: 0 auto;
-padding-bottom: 8vh;padding-top: 10vh; padding-left:  12vw;text-align: center;}
+a {outline : none; color: white;text-align: center;}
+h1 {position: relative; right: 10px; font-family: 'Calistoga', cursive;color: white; text-align: center; padding-bottom: 6vh;}
 h2 {font-size: 5vw;text-align: center;}
 p {font-size: 3.5vw;font-weight: bold;}
 .accentColor { color: #0062ff; text-align: center;}
@@ -16,6 +15,11 @@ p {font-size: 3.5vw;font-weight: bold;}
 header h2 {
   text-align: left;
 }
+h2 img {
+    padding-right: 10px;
+    position: relative;
+    top: 4px;
+}
 
 .request {
   color: white;
@@ -23,13 +27,30 @@ header h2 {
 .wrap {
   width: 100%;
   padding: 5vw;
-  max-width: 600px;
   box-sizing: border-box;
   margin: 0 auto;
+  padding-top: 20px;
+}
+.wrap:nth-child(1) {
+  padding-bottom: 0;
 }
 
 .splitCol {
   display: flex;
+}
+
+.buttonSplit {
+  width: 100%;
+}
+.buttonSplit:first-child {
+  margin-right: 2.5vw;
+}
+
+h1 img {
+  width: 64px;
+  height: auto;
+  position: relative;
+  top: 20px;
 }
 
 /* Animations */
@@ -67,19 +88,10 @@ header h2 {
     53% {opacity: 0;}
     100% {opacity: 0;}
 }
-
-#f1 {
-  animation: none;
-}
-#f2 {
-    -webkit-animation-delay: -1s;
-}
-#f3 {
-    -webkit-animation-delay: -.5s;
-}
-#f4 {
-    -webkit-animation-delay: -.1s;
-}
+#f1 { animation: none;}
+#f2 { -webkit-animation-delay: -1s;}
+#f3 { -webkit-animation-delay: -.5s;}
+#f4 { -webkit-animation-delay: -.1s;}
 
 .scaleIn {
 	opacity: 1;
@@ -107,13 +119,6 @@ header h2 {
 
 /* form */
 
-.birdLogo {
-  position: absolute;
-  top: 12vh;
-  left: 8vh;
-  height: 10vh;
-}
-
 form {
   background: white;
   border-radius: 12px;
@@ -131,22 +136,28 @@ form input, form select {
   font-family: 'Montserrat', sans-serif;
   font-size: 3.5vw;
   font-weight: bold;
+  background-color: #fff;
 }
 .submit {
   background-color: #0062ff; 
   color: white;
   border: none;
   font-weight: bold;
+  text-align: center;
 }
-#name, #password, select {
+#name, #password, select, .search {
   border: 1px solid lightgrey;
   color: grey;
 }
-#name:focus , #password:focus, select:focus {
+#name:focus , #password:focus, select:focus, .search:focus  {
   border: 1px solid #0062ff;
 }
 form select {
   width: 100%;
+}
+
+.error {
+  border: 2px solid #ef4136!important;
 }
 
 .loginLinks a {
@@ -187,6 +198,78 @@ header img {
 }
 header .wrap {
   padding-bottom: 0;
+}
+
+.backBtn p {
+  display: inline-block;
+  position: relative;
+  top: -5px;
+  color: #0062ff;
+}
+.backBtn img {
+  width: 20px;
+}
+
+.backBtnWhite p {
+  display: inline-block;
+  position: relative;
+  top: -5px;
+  color: #ffffff;
+}
+.backBtnWhite {
+  text-decoration: none;
+}
+.backBtnWhite img {
+  width: 20px;
+}
+
+
+.dashBtnBlue {
+  background-image: linear-gradient(to top right, #0890e4, #13cde7);
+  padding: 15px;
+  border-radius: 12px;
+  align-items: center;
+}
+.dashBtnRed {
+  background-image: linear-gradient(to top right, #e44252, #b4172c);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  align-items: center;
+}
+.dashBtnGreen {
+  background-image: linear-gradient(to top right, #57a249, #a1dd47);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  align-items: center;
+}
+.dashBtnOrange {
+  background-image: linear-gradient(to top right, #fbb040, #ef4136);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  align-items: center;
+}
+.dashOverlay {
+  background-image: linear-gradient(to top right, #e44252, #b4172c);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  position: fixed;
+  bottom: 5vw;
+  box-sizing: border-box;
+  width: 90vw;
+  align-items: center;
+  color: white;
+}
+.dashBtnRed img, .dashBtnBlue img, .dashBtnGreen img, .dashBtnOrange img, .dashOverlay img {
+  margin-right: 10px;
+  height: 42px;
+}
+
+.dashOverlay p {
+    padding-left: 5vw;
 }
 
 .slides {
@@ -254,23 +337,18 @@ header .wrap {
 }
 
 .informationWrap {
-  display: flex;
-}
-
-.information {
-  background-image: linear-gradient(to top right, #57a249, #a1dd47);
-  height: 20vh;
-  width: 100%;
-  margin-bottom: 10px;
-}
-.information:nth-child(odd) {
-  margin-right: 10px;
+  margin-top: 2vh;
+  margin-bottom: 10vh;
 }
 
 .cancel {
   background-image: linear-gradient(to top right, #e44252, #b4172c);
-  height: 10vh;
   padding: 2.5vh;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Staff Dashboard */
@@ -334,30 +412,14 @@ nav a {
 
 /* Staff Analytics */
 
-.requestIcon1 {
+/*
+.requestIcon {
   background-image: linear-gradient(to top right, #fbb040, #ef4136);
   width: 42px;
   height: 42px;
   border-radius: 12px;
 }
-.requestIcon2 {
-  background-image: linear-gradient(to top right, #fbb040, #ef4136);  
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-}
-.requestIcon3 {
-  background-image: linear-gradient(to top right, #e44252, #b4172c);
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-}
-.requestIcon4 {
-  background-image: linear-gradient(to top right, #0890e4, #13cde7); 
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-}
+*/
 
 .staffAnalytics {
   display: flex;
@@ -428,16 +490,21 @@ nav a {
   margin-bottom: 2vh;
 }
 
+.acceptDelete {
+  width: 100%;
+}
+
 .acceptRequest {
   background-color: #0062ff; 
   padding: 5vw;
   color: white;
   border: none;
   font-weight: bold;
-  border-radius:4px;
+  border-radius: 12px 0px 0px 12px;
   font-size: 3.5vw;
   flex-grow: 2;
   margin-top: 2.5vh;
+  width: 100%;
 }
 
 .completeRequest {
@@ -446,10 +513,11 @@ nav a {
   color: white;
   border: none;
   font-weight: bold;
-  border-radius:4px;
+  border-radius: 12px 0px 0px 12px;
   font-size: 3.5vw;
   flex-grow: 2;
   margin-top: 2.5vh;
+  width: 100%;
 }
 
 .delete{
@@ -459,10 +527,11 @@ nav a {
   padding: 5vw;
   font-weight: bold;
   margin-left: 1vw;
-  border-radius:4px;
+  border-radius: 0px 12px 12px 0px;
   font-size: 3.5vw;
   margin-top: 2.5vh;
   flex-grow: 1;
+  width: 100%;
 }
 
 /* Admin Table */
@@ -479,11 +548,8 @@ nav a {
   background: #0062ff;
   color: white;
 }
-.adminTable tr:nth-child(even) {
+.adminTable tr {
   background: #e2e2e2;
-}
-.adminTable tr:nth-child(odd) {
-  background: #c9c9c9;
 }
 .adminTable td {
   padding: 10px;
@@ -492,7 +558,32 @@ nav a {
   color: black;
   text-decoration: underline;
 }
-  
+
+.adminForm {
+  padding: 0;
+}
+.adminForm textarea {
+    border: 1px solid lightgrey;
+    color: grey;
+    padding: 5vw;
+    margin-top: 10px;
+    border-radius: 4px;
+    width: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 18vh;
+}
+
+option.avatar {
+  background-repeat: no-repeat !important;
+  padding-left: 20px;
+}
+.avatar .ui-icon {
+  background-position: left top;
+}
+
+
 /* glucose logging chart */
 
 #chartWrap {
@@ -510,6 +601,10 @@ nav a {
     fill: #ffffff !important;
 }
 
+.chartControls {
+  margin-top: 25px;
+}
+
 .chartControls p {
   width: 100%;
   color: black;
@@ -519,17 +614,121 @@ nav a {
   box-sizing: border-box;
 }
 
-.highGlucose {
+.dangerGlucose {
   background: #ff554b;
+  flex-grow: 2;
+}
+.highGlucose {
+  background: #ffaa41;
 }
 .safeGlucose {
   background: #92c754;
 }
 
-@media only screen and (min-width: 600px) {
+.glucoseKey p {
+  padding: 10px;
+  margin-right: 5px;
+  text-align: center;
+  border-radius: 12px;
+}
+
+/* register form */
+
+#tabs {
+  width:100%;
+  z-index: 999;
+  margin-top: -30px;
+}
+#tabs ul {
+  display:flex;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  width: 90%;
+}
+#tabs li {
+  width: 100%;
+  text-align: center;
+}
+#tabs li a p {
+  height: 100px;
+  z-index: 999;
+  top: 20px;
+  position: relative;
+}
+#tabs a {
+  text-decoration: none;
+}
+
+.tabsImg {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  position: relative;
+  top:-50px;
+  z-index: -998;
+}
+.tabsImg span {
+  width: 100%;
+  text-align: center;
+}
+.tabsImg img {
+  width: 42px;
+}
+
+.dottedLine {
+  width: 50%;
+  border: none;
+  border-top: 2px dashed white;
+  position:relative;
+  top: 79px;
+  z-index: -999;
+  text-decoration: none;
+}
+
+
+@media only screen and (min-width: 450px) {
   
+  h2 {
+    font-size: 24px
+  }
   p {
-    color: red;
+    font-size: 14px;
+  }
+  form input {
+    font-size: 14px;
+    padding: 25px;
+  }
+  form select {
+    font-size: 14px!important;
+    padding: 25px;
+  }
+  #loginForm {
+    width: 25vw;
+    min-width: 350px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .loginLinks {
+    width: 25vw;
+    min-width: 350px;
+    margin: 0 auto;
+  }
+  #tabs {
+    min-width: 350px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .tabsImg {
+    min-width: 350px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .dottedLine {
+    width: 255px;
+    margin: 0 auto;
+    top: 100px;
   }
   
 }

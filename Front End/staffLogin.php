@@ -15,7 +15,7 @@ try {
     if(empty($email) || empty($password)) {
       $message = '<label>All fields are required</label>';
     } else {
-      $query = "SELECT * FROM nightingale_user WHERE email = :email AND password = :password";
+      $query = "SELECT * FROM nightingale_staffUser WHERE email = :email AND password = :password";
       $statement = $dbConn->prepare($query);
       $statement->execute(
         array(
@@ -28,17 +28,17 @@ try {
       if ($count > 0){
         
         //get session data from db
-        $sessionQuery = "SELECT * FROM nightingale_user WHERE email = '$email' AND password = '$passwordHash'";
+        $sessionQuery = "SELECT * FROM nightingale_staffUser WHERE email = '$email' AND password = '$passwordHash'";
         $sessionData = $dbConn->query($sessionQuery);
         while($rowObj = $sessionData->fetchObject()){  
           
-          $_SESSION['userID'] = $rowObj->userID;
-          $_SESSION['firstName'] = $rowObj->firstName;
+          $_SESSION['staffID'] = $rowObj->staffID;
+          $_SESSION['firstNameStaff'] = $rowObj->firstNameStaff;
           $_SESSION['locationID'] = $rowObj->locationID;
-          $_SESSION['roomNo'] = $rowObj->roomNo;
+          $_SESSION['admin'] = $rowObj->admin;
         }
         
-        header("location:dashboard.php");
+        header("location:staffDashboard.php");
       } else {
         $message = '<label>Password or username incorrect</label>';
       }
@@ -56,7 +56,7 @@ catch (PDOException $error){
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Log In</title>
+  <title>Staff Login</title>
   <meta name="description" content="Dashboard">
   <meta name="author" content="W15024065">
   <meta name="viewport" content="width=device-width, initial-scale=0.95">
@@ -73,7 +73,7 @@ catch (PDOException $error){
   
   <main class="wrap">
     
-    <h1 class="fallIn"><img class="birdLogo" src="images/whitebird.png"/>Nightingale</h1>
+    <h1 class="fallIn"><img class="birdLogo" src="images/whitebird.png"/>Nightingale Staff</h1>
     
     <div class="formWrap scaleIn">
       <!-- Login Form -->
@@ -81,8 +81,8 @@ catch (PDOException $error){
         <h2>Sign in</h2>
         <span class="accentColor"><p>Please enter your email and password</p></span>
         <div class="formWrap">
-          <input value="jsouthward@email.com" type="email" name="email" id="name" placeholder="Email" tabindex="1"/>
-          <input value="password" type="password" name="password" id="name" placeholder="Password" tabindex="2"/>  
+          <input type="email" name="email" id="name" placeholder="Email" tabindex="1"/>
+          <input type="password" name="password" id="name" placeholder="Password" tabindex="2"/>  
         </div>
         <?php 
         if(isset($message)){
@@ -94,8 +94,7 @@ catch (PDOException $error){
       
     </div>
     <div class="splitCol loginLinks">
-      <a href="staffLogin.php"><p>Staff Login</p></a>
-      <a href="register.php"><p>Create Account</p></a>
+      <a href="login.php"><p>User login</p></a>
     </div>
   </main>
     

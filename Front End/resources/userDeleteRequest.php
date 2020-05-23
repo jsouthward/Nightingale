@@ -13,19 +13,20 @@ try{
   DELETE FROM nightingale_alert
     WHERE userID = '$userID'
     AND timeCompleted IS NULL
+    AND timeAccepted IS NULL
   ";
   $deleteQuery = $dbConn->query($deleteTask);
   if ($deleteQuery === false) {
-    header('Location: dashboard.php');
+    header('Location: ../dashboard.php');
     exit();
   } else {
     //if deleted
-    header('Location: dashboard.php');
+    header('Location: ../dashboard.php');
     exit();
   }
 }//end try
 catch (Exception $e){
-  header('Location: dashboard.php');
+  header('Location: ../dashboard.php');
   exit();
 }//end catch
 ?>
