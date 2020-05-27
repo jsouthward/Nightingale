@@ -15,16 +15,40 @@ if(!isset($_SESSION["userID"])){
   <title>Nightingale Dash</title>
   <meta name="description" content="Dashboard">
   <meta name="author" content="W15024065">
-  <meta name="viewport" content="width=device-width, initial-scale=0.95">
+  <meta name="viewport" content="width=device-width, initial-scale=0.95, user-scalable=no">
   <link rel="stylesheet" href="css/stylish.css">
   <link href="https://fonts.googleapis.com/css?family=Calistoga|Montserrat:400,700&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script>
+    function getAudio(){
+      var txt=jQuery('#txt').val()
+      jQuery.ajax({
+        url:'resources/getAudio.php',
+        type:'post',
+        data:'txt='+txt,
+        success:function(result){
+          jQuery('#player').html(result);
+        }
+      });
+    }
+  </script>
+  <?php darkModeStyle(); textModeStyle(); ?>
 </head>
 
 <body class="fallIn">
   <header class="wrap">
-    <img src="https://i.imgur.com/jTlkSyj.png"/>
+    <div class="splitCol spaceBetween">
+      <div><img src="images/birdicon.png"/></div>
+      <div><a href="settings.php"><img src="images/menu.png"/></a></div>
+    </div>
     <?php echo '<h2>Hello '.$_SESSION["firstName"].'</h2>'; ?>
-    <p>Please use the buttons to let a member of staff know you need something.
+    <p>Please use the buttons to let a member of staff know you need something.</p>
+    <div id="player"></div>
+    <form class="infoForm" method="post">
+      <input hidden type="textbox" value="you can use the buttons below to request help, or record Glucose levels. please only use the emergency button if you need urgent staff attention." id="txt" name="txt"/>
+      <input class="infoBtn" type="button" name="txt" onclick="getAudio()"/>
+      Audio Help
+    </form>
   </header>
   
   <main class= "userDash wrap">

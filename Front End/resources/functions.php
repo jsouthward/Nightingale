@@ -19,12 +19,15 @@ function checkIfAdmin() {
     
     $sql = "  SELECT admin 
               FROM nightingale_staffUser
-              WHERE staffID = '$staffID';";
+              WHERE staffID = :staffID;";
     
-    $queryResult = $dbConn->query($sql);
+    $queryResult = $dbConn->prepare($sql);
+    $queryResult->execute(array(
+      'staffID' => $staffID,
+    ));
 
-    while ($rowObj = $queryResult->fetchObject()){
-      $admin = (int) $rowObj->admin;
+    while ($rowObj = $queryResult->fetch(PDO::FETCH_ASSOC)){
+      $admin = (int) $rowObj['admin'];
       if ($admin == 1){
         return 1;
       } else {
@@ -34,6 +37,103 @@ function checkIfAdmin() {
   } else {
     header("location:staffLogin.php");
   }
+}
+
+// check if user is using dark mode
+function darkMode() {
+  //if staff user not logged in 
+  if(isset($_SESSION["userID"])){
+    $dbConn = getConnection();
+    $userID = $_SESSION["userID"];
+    
+    $sql = "  SELECT darkMode 
+              FROM nightingale_user
+              WHERE userID = :userID;";
+    
+    $queryResult = $dbConn->prepare($sql);
+    $queryResult->execute(array(
+      'userID' => $userID,
+    ));
+
+    while ($rowObj = $queryResult->fetch(PDO::FETCH_ASSOC)){
+      $darkMode = (int) $rowObj['darkMode'];
+      if ($darkMode == 1){
+        return 1;
+      } else {
+        return 0;
+      }
+    }//end while
+  } else {
+    header("location:login.php");
+  }
+}
+
+// check if user using large text mode
+function textMode() {
+  //if staff user not logged in 
+  if(isset($_SESSION["userID"])){
+    $dbConn = getConnection();
+    $userID = $_SESSION["userID"];
+    
+    $sql = "  SELECT textMode 
+              FROM nightingale_user
+              WHERE userID = :userID;";
+    
+    $queryResult = $dbConn->prepare($sql);
+    $queryResult->execute(array(
+      'userID' => $userID,
+    ));
+
+    while ($rowObj = $queryResult->fetch(PDO::FETCH_ASSOC)){
+      $darkMode = (int) $rowObj['textMode'];
+      if ($darkMode == 1){
+        return 1;
+      } else {
+        return 0;
+      }
+    }//end while
+  } else {
+    header("location:login.php");
+  }
+}
+
+function darkModeStyle() {
+  if (darkMode() == 1){
+      echo "
+      <style>
+        body {
+          background: #081e2b;
+          color: white;
+        }
+        form {
+          background: none;
+        }
+        .chartControls {
+          background: #ffffff;
+          border-radius: 14px;
+          margin-bottom: 5px;
+        } 
+        .glucoseKey {
+          color: black; 
+        }
+        td {
+        color: black;
+        }
+      </style>
+      ";
+    }
+}
+
+function textModeStyle() {
+  if (textMode() == 1){
+      echo "
+      <style>
+        body p {
+          font-size: 4vw;
+        }
+      </style>
+      ";
+    }
 }
 
 //count rows of query
@@ -71,14 +171,17 @@ function autocompleteUser($locationID) {
     $sql = "
       SELECT firstName, lastName, userID
       FROM nightingale_user
-      WHERE locationID = '$locationID';
+      WHERE locationID = :locationID;
     ";
-    $queryResult = $dbConn->query($sql);
-    while ($rowObj = $queryResult->fetchObject()){
+    $queryResult = $dbConn->prepare($sql);
+    $queryResult->execute(array(
+      'locationID' => $locationID,
+    ));
+    while ($rowObj = $queryResult->fetch(PDO::FETCH_ASSOC)){
       
-      $fn = $rowObj->firstName;
-      $ln = $rowObj->lastName;
-      $id = $rowObj->userID;
+      $fn = $rowObj['firstName'];
+      $ln = $rowObj['lastName'];
+      $id = $rowObj['userID'];
       
       echo '{value: "'.$id.'",label: "'.$fn.' '.$ln.'"},';
 
@@ -93,9 +196,7 @@ function autocompleteUser($locationID) {
 function getTasks(){
   try{
     $dbConn = getConnection();
-    
     $staffLocationID = $_SESSION["locationID"];
-    
     //Query to retrieve events that have not been accepted
     $sqlRequests = "
       SELECT 
@@ -113,26 +214,28 @@ function getTasks(){
         LEFT JOIN nightingale_request ON nightingale_alert.requestID=nightingale_request.requestID
       WHERE timeCompleted IS NULL
       AND timeAccepted IS NULL
-      AND nightingale_alert.locationID = '$staffLocationID';
+      AND nightingale_alert.locationID = :staffLocationID;
     ";
-    $queryRequestsResult = $dbConn->query($sqlRequests);
-
-    while ($rowObj = $queryRequestsResult->fetchObject()){
+    $queryRequestsResult = $dbConn->prepare($sqlRequests);
+    $queryRequestsResult->execute(array(
+      'staffLocationID' => $staffLocationID,
+    ));
+    while ($rowObj = $queryRequestsResult->fetch(PDO::FETCH_ASSOC)){
       //Get Time elapsed 
-      $minutes = getTimeElasped($rowObj->timeCreated);
+      $minutes = getTimeElasped($rowObj['timeCreated']);
       //Display Request info 
       echo "
-      <a class='activityLink' href='staffRequest.php?taskID={$rowObj->taskID}'>
+      <a class='activityLink' href='staffRequest.php?taskID={$rowObj['taskID']}'>
         <section class='staffRequest'>";
       //Task Icon based on request type 
       echo "
       <div class='requestIcon'>
-        <img src='{$rowObj->imgURL}'/>
+        <img src='{$rowObj['imgURL']}'/>
       </div>";//Change colour class for each request type 
       echo "<div class='staffRequestInfo'>";
-      echo "<p><b>Room: {$rowObj->roomNo}</b></p>";
-      echo "<p>Patient: {$rowObj->firstName} {$rowObj->lastName}</p>";
-      echo "<p>Request: {$rowObj->requestName}</p>";                
+      echo "<p><b>Room: {$rowObj['roomNo']}</b></p>";
+      echo "<p>Patient: {$rowObj['firstName']} {$rowObj['lastName']}</p>";
+      echo "<p>Request: {$rowObj['requestName']}</p>";                
       echo "</div><span class='time'><p>{$minutes}</p></span>";
       echo "</section></a>";
     }//end while
@@ -169,22 +272,26 @@ function getAcceptedTasks($acceptedBy) {
       AND timeCompleted IS NULL
       ORDER BY timeCreated;
     ";
-    $queryAccRequestsResult = $dbConn->query($sqlAccRequests);
-    while ($rowObj = $queryAccRequestsResult->fetchObject()){
+    $queryAccRequestsResult = $dbConn->prepare($sqlAccRequests);
+    $queryAccRequestsResult->execute(array(
+      'acceptedBy' => $acceptedBy,
+      'staffLocationID' => $staffLocationID,
+    ));
+    while ($rowObj = $queryAccRequestsResult->fetch(PDO::FETCH_ASSOC)){
       //Get Time elapsed 
-      $minutes = getTimeElasped($rowObj->timeCreated);
+      $minutes = getTimeElasped($rowObj['timeCreated']);
       //Display Request info
       echo "
-      <a class='activityLink' href='staffRequest.php?taskID={$rowObj->taskID}'>
+      <a class='activityLink' href='staffRequest.php?taskID={$rowObj['taskID']}'>
         <section class='staffRequest'>
           <div class='acceptedRequestIcon'>
             <img src='https://i.imgur.com/IqWX5sf.png'/>
           </div>
         <div class='staffRequestInfo'>
       ";
-      echo "<p><b>Room: {$rowObj->roomNo}</b></p>";
-      echo "<p>Patient: {$rowObj->firstName} {$rowObj->lastName}</p>";
-      echo "<p>Request: {$rowObj->requestName}</p>";                
+      echo "<p><b>Room: {$rowObj['roomNo']}</b></p>";
+      echo "<p>Patient: {$rowObj['firstName']} {$rowObj['lastName']}</p>";
+      echo "<p>Request: {$rowObj['requestName']}</p>";                
       echo "</div><span class='acceptedTime'><p>{$minutes}</p></span>";
       echo "</section></a>";
       $notEmpty = true;
@@ -218,24 +325,27 @@ function getPanicTasks() {
         nightingale_staffUser.lastNameStaff
       FROM nightingale_alert
       INNER JOIN nightingale_staffUser ON nightingale_alert.staffID=nightingale_staffUser.staffID
-      WHERE nightingale_alert.locationID = '$staffLocationID'
+      WHERE nightingale_alert.locationID = :staffLocationID
       AND timeCompleted IS NULL
       AND requestID = 0
       ORDER BY timeCreated;
     ";
-    $queryResult = $dbConn->query($sql);
-    while ($rowObj = $queryResult->fetchObject()){
+    $queryResult = $dbConn->prepare($sql);
+    $queryResult->execute(array(
+       'staffLocationID' => $staffLocationID,
+    ));
+    while ($rowObj = $queryResult->fetch(PDO::FETCH_ASSOC)){
       //Get Time elapsed 
-      $minutes = getTimeElasped($rowObj->timeCreated);
+      $minutes = getTimeElasped($rowObj['timeCreated']);
       //Display Request info
       echo "
         <a class='requestLink scaleIn'>
         <section class='splitCol dashOverlay'>";
-      echo '<a href="resources/deleteRequest.php?taskID='.$rowObj->taskID.'" onclick="return confirm('."'Are you sure you want to delete request?'".')">';
+      echo '<a href="resources/deleteRequest.php?taskID='.$rowObj['taskID'].'" onclick="return confirm('."'Are you sure you want to delete request?'".')">';
       echo " <img src='images/delete.png'/>
           </a>
           <p>Urgent Request<br> Needs help!</p>
-          <p>Staff Member:<br> {$rowObj->firstNameStaff} {$rowObj->lastNameStaff}</p>
+          <p>Staff Member:<br> {$rowObj['firstNameStaff']} {$rowObj['lastNameStaff']}</p>
         </section>
       </a>
       <br>
@@ -258,19 +368,22 @@ function getRequestsTable($locationID) {
       FROM nightingale_request
       WHERE locationID = '$locationID'
     ";
-    $queryResult = $dbConn->query($sql);
+    $queryResult = $dbConn->prepare($sql);
+    $queryResult->execute(array(
+      'locationID' => $locationID,
+    ));
     
     echo '
       <table class="adminTable">
       <tr><th>Name</th><th>edit</th><th>Delete</th></tr>';
     
-    while ($rowObj = $queryResult->fetchObject()){
+    while ($rowObj = $queryResult->fetch(PDO::FETCH_ASSOC)){
       echo "
         <tr>
-        <td>{$rowObj->requestName}</td>
-        <td><a href='adminDashboard.php?edit={$rowObj->requestID}'>edit</a></td>";
+        <td>{$rowObj['requestName']}</td>
+        <td><a href='adminDashboard.php?edit={$rowObj['requestID']}'>edit</a></td>";
       echo '
-        <td><a onclick="return confirm('."'Are you sure you want to remove Request?'".')" href="resources/adminDeleteRequest.php?requestID='."{$rowObj->requestID}".'">delete</a></td>
+        <td><a onclick="return confirm('."'Are you sure you want to remove Request?'".')" href="resources/adminDeleteRequest.php?requestID='."{$rowObj['requestID']}".'">delete</a></td>
         </tr>
       ';
     }//end while
@@ -279,6 +392,21 @@ function getRequestsTable($locationID) {
   catch (Exception $e){
     echo "<p>Query failed: ".$e->getMessage()."</p>\n";
   }//end catch
+}
+
+//add new location to the db
+function addNewLocation($locationName) {
+  $dbConn = getConnection();
+  
+  $query = "  INSERT INTO nightingale_location (location) 
+              VALUES (:locationName);";
+  $newlocationQuery = $dbConn->prepare($query);
+  $newlocationQuery->execute(array(
+    'locationName' => $locationName,
+  ));
+  //redirect
+  header('Location: adminDashboard.php?locationAdded=true');
+  exit();
 }
 
 //add new request to the db for admin location
@@ -327,14 +455,18 @@ function getGlucoseData($queryDate, $userID) {
     $sql = "
       SELECT *
       FROM nightingale_glucose
-      WHERE userID = '$userID'
-      AND readingDate = '$queryDate';
+      WHERE userID = :userID
+      AND readingDate = :queryDate;
     ";
-    $queryResult = $dbConn->query($sql);
-    while ($rowObj = $queryResult->fetchObject()){
-      $hours = date('G', $rowObj->readingTime);
-      $mins = date('i', $rowObj->readingTime);
-      $reading = $rowObj->readingData;
+    $queryResult = $dbConn->prepare($sql);
+    $queryResult->execute(array(
+      'queryDate' => $queryDate,
+      'userID' => $userID,
+    ));
+    while ($rowObj = $queryResult->fetch(PDO::FETCH_ASSOC)){
+      $hours = date('G', $rowObj['readingTime']);
+      $mins = date('i', $rowObj['readingTime']);
+      $reading = $rowObj['readingData'];
       echo "[new Date(2015, 0, 1, ".$hours.", ".$mins."), ".$reading."],";
     }//end while
   }//end try
@@ -361,17 +493,27 @@ function getGlucoseDataTable($queryDate, $userID) {
   try{
     $dbConn = getConnection();
     //Query to retrieve requests for location
-    $sql = "
+    $sqlrow = "
       SELECT *
       FROM nightingale_glucose
       WHERE userID = '$userID'
       AND readingDate = '$queryDate'
       ORDER BY readingTime DESC;
     ";
-    $queryResult = $dbConn->query($sql);
-    
+    $sql = "
+      SELECT *
+      FROM nightingale_glucose
+      WHERE userID = :userID
+      AND readingDate = :queryDate
+      ORDER BY readingTime DESC;
+    ";
+    $queryResult = $dbConn->prepare($sql);
+    $queryResult->execute(array(
+      'userID' => $userID,
+      'queryDate' => $queryDate,
+    ));
     // if there is data 
-    if (rowCount($sql) > 0){
+    if (rowCount($sqlrow) > 0){
       echo "
       <p>All glucose records.</p>
       <div class='splitCol glucoseKey'>
@@ -385,9 +527,9 @@ function getGlucoseDataTable($queryDate, $userID) {
         <th>mg/dL</th> 
       </tr>
       ";
-      while ($rowObj = $queryResult->fetchObject()){
-        $dateTimes = date('d/m/y G:i', $rowObj->readingTime);
-        $reading = $rowObj->readingData;
+      while ($rowObj = $queryResult->fetch(PDO::FETCH_ASSOC)){
+        $dateTimes = date('d/m/y G:i', $rowObj['readingTime']);
+        $reading = $rowObj['readingData'];
         echo "
         <tr><td>$dateTimes</td>";
         glucoseThreat($reading);
@@ -414,20 +556,23 @@ function getRequests($locationID){
       SELECT 
         requestID, requestName, description, imgURL, locationID 
       FROM nightingale_request
-      WHERE locationID = $locationID
+      WHERE locationID = :locationID
       ORDER BY requestID
     ";//OR locationID IS NULL 
-    $queryRequestsResult = $dbConn->query($sqlRequests);
+    $queryRequestsResult = $dbConn->prepare($sqlRequests);
+    $queryRequestsResult->execute(array(
+      'locationID' => $locationID,
+    ));
     echo '<aside class="wrapScroll"> 
     <p>Non Emeregency Requests</p>
     <section class="requestSlider">
     <div class="slides">';
-    while ($rowObj = $queryRequestsResult->fetchObject()){
+    while ($rowObj = $queryRequestsResult->fetch(PDO::FETCH_ASSOC)){
       echo "<div class='request customRequest'>
-              <a class='requestLink' href='resources/createRequest.php?request={$rowObj->requestID}'>
-                <img src='{$rowObj->imgURL}'/>
-                <h2>{$rowObj->requestName}</h2>
-                <p>{$rowObj->description}</p> 
+              <a class='requestLink' href='resources/createRequest.php?request={$rowObj['requestID']}'>
+                <img src='{$rowObj['imgURL']}'/>
+                <h2>{$rowObj['requestName']}</h2>
+                <p>{$rowObj['description']}</p> 
               </a>
             </div>";
     }//end while
@@ -443,19 +588,22 @@ function getAnalytics(){
   try{
     $dbConn = getConnection();
     
-    $staffLocationID = $_SESSION["locationID"];
+    $staffLocationID = htmlspecialchars($_SESSION["locationID"]);
     
     //Query to get avarage time taken to complete requests
     $sqlAvg = "
       SELECT locationID, AVG(timeCompleted - timeCreated) AS completedAvg
       FROM nightingale_alert
       WHERE timeCompleted IS NOT NULL
-      AND locationID = '$staffLocationID';
+      AND locationID = :staffLocationID;
     ";
-    $queryResult = $dbConn->query($sqlAvg);
-    while ($rowObj = $queryResult->fetchObject()){
+    $queryResult = $dbConn->prepare($sqlAvg);
+    $queryResult->execute(array(
+      'staffLocationID' => $staffLocationID,
+    ));
+    while ($rowObj = $queryResult->fetch(PDO::FETCH_ASSOC)){
       //convert timestamp to mins
-      $minutes = round( $rowObj->completedAvg / 60);
+      $minutes = round( $rowObj['completedAvg'] / 60);
     };//end while
     echo '
     <section class="staffAnalytics">
@@ -508,10 +656,40 @@ function addNewUser($email, $password, $fName, $lName, $location, $roomNo) {
   $dbConn = getConnection();
   //hash password
   $passwordHash = md5($password); 
-  $query = "INSERT INTO nightingale_user (email, password, firstName, lastName, locationID, roomNo) VALUES ('$email', '$passwordHash', '$fName', '$lName', '$location', '$roomNo')";
-  $newUserQuery = $dbConn->exec($query);
+  $query = "INSERT INTO nightingale_user (email, password, firstName, lastName, locationID, roomNo) VALUES (:email, :passwordHash, :fName, :lName, :location, :roomNo)";
+  $newUserQuery = $dbConn->prepare($query);
+  $newUserQuery->execute([
+    'email' => $email,
+    'passwordHash' => $passwordHash,
+    'fName' => $fName,
+    'lName' => $lName,
+    'location' => $location,
+    'roomNo' => $roomNo,
+  ]);
   //redirect
   header('Location: dashboard.php');
+  exit();
+}
+
+function addNewStaffUser($email, $password, $fName, $lName, $location, $admin) {
+  $dbConn = getConnection();
+  if($admin == 2){
+    $admin = 0;
+  }
+  //hash password
+  $passwordHash = md5($password); 
+  $query = "INSERT INTO nightingale_staffUser (email, password, firstNameStaff, lastNameStaff, locationID, admin) VALUES (:email, :passwordHash, :fName, :lName, :location, :admin)";
+  $newUserQuery = $dbConn->prepare($query);
+  $newUserQuery->execute([
+    'email' => $email,
+    'passwordHash' => $passwordHash,
+    'fName' => $fName,
+    'lName' => $lName,
+    'location' => $location,
+    'admin' => $admin,
+  ]);
+  //redirect
+  header('Location: adminDashboard.php?success=true');
   exit();
 }
 
@@ -519,14 +697,10 @@ function addNewUser($email, $password, $fName, $lName, $location, $roomNo) {
 function deleteCompleted() {
   try{
     $dbConn = getConnection();
-
-    $staffLocationID = $_SESSION["locationID"];
-    
-    $deleteCompleted = "
-    DELETE FROM nightingale_alert
-      WHERE timeCompleted IS NOT NULL
-      AND locationID = $staffLocationID;
-    ";
+    $staffLocationID = htmlspecialchars($_SESSION["locationID"]);
+    $deleteCompleted = "DELETE FROM nightingale_alert
+                        WHERE timeCompleted IS NOT NULL
+                        AND locationID = $staffLocationID;";
     $deleteQuery = $dbConn->query($deleteCompleted);
     if ($deleteQuery === false) {
       header('Location: ../staffAnalytics.php');
@@ -547,10 +721,10 @@ function panic($staffLocation, $staffID) {
   try{
     $dbConn = getConnection();
     $currentTime = time();
-    $newTask = "
-      INSERT INTO nightingale_alert (timeCreated, locationID, staffID, requestID) 
-      VALUES ('$currentTime','$staffLocation','$staffID', '0');
-    ";
+    $staffLocation = htmlspecialchars($staffLocation);
+    $staffID = htmlspecialchars($staffID);
+    $newTask = "INSERT INTO nightingale_alert (timeCreated, locationID, staffID, requestID) 
+                VALUES ('$currentTime','$staffLocation','$staffID', '0');";
     $newTaskQuery = $dbConn->exec($newTask);
     
     header('Location: ../staffDashboard.php');
@@ -560,6 +734,37 @@ function panic($staffLocation, $staffID) {
     header('Location: ../staffDashboard.php');
     exit();
   }//end catch
+}
+
+function userLocation($locationID, $userID, $roomNo) {
+  $dbConn = getConnection();
+  $query = "  UPDATE nightingale_user 
+              SET locationID = :locationID, roomNo = :roomNo
+              WHERE userID = :userID;";
+  $editLocationQuery = $dbConn->prepare($query);
+  $editLocationQuery->execute(array(
+    'locationID' => $locationID,
+    'userID' => $userID,
+    'roomNo' => $roomNo,
+  ));
+  //redirect
+  header('Location: resources/logOut.php');
+  exit();
+}
+
+function staffLocation($locationID, $staffID) {
+  $dbConn = getConnection();
+  $query = "  UPDATE nightingale_staffUser
+              SET locationID = :locationID
+              WHERE staffID = :staffID;";
+  $editLocationQuery = $dbConn->prepare($query);
+  $editLocationQuery->execute([
+    'locationID' => $locationID,
+    'staffID' => $staffID,
+  ]);
+  //redirect
+  header('Location: resources/logOut.php');
+  exit();
 }
 
 ?>

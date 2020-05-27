@@ -17,12 +17,15 @@ try{
   $currentTime = time();
   $editTask = "
     UPDATE nightingale_alert 
-    SET timeAccepted = '$currentTime', staffID = '$StaffID'
-    WHERE taskID = '$taskID';
+    SET timeAccepted = '$currentTime', staffID = :StaffID
+    WHERE taskID = :taskID;
   ";
-  $newTaskQuery = $dbConn->exec($editTask);
-  // WARNING CHANGE THIS SQL INJECTION RISK!!!
-
+  $newTaskQuery = $dbConn->prepare($editTask);
+  $newTaskQuery->execute(array(
+    'StaffID' => $StaffID,
+    'taskID' => $taskID,
+  ));
+  
   header('Location: ../staffDashboard.php');
   exit();
 }//end try

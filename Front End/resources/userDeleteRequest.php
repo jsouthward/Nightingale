@@ -11,11 +11,14 @@ try{
 
   $deleteTask = "
   DELETE FROM nightingale_alert
-    WHERE userID = '$userID'
+    WHERE userID = :userID
     AND timeCompleted IS NULL
     AND timeAccepted IS NULL
   ";
-  $deleteQuery = $dbConn->query($deleteTask);
+  $deleteQuery = $dbConn->prepare($deleteTask);
+  $deleteQuery->execute(array(
+    'userID' => $userID,
+  ));
   if ($deleteQuery === false) {
     header('Location: ../dashboard.php');
     exit();

@@ -15,9 +15,12 @@ try{
   $editTask = "
     UPDATE nightingale_alert 
     SET timeCompleted = '$currentTime'
-    WHERE taskID = '$taskID';
+    WHERE taskID = :taskID;
   ";
-  $newTaskQuery = $dbConn->exec($editTask);
+  $newTaskQuery = $dbConn->prepare($editTask);
+  $newTaskQuery->execute(array(
+    'taskID' => $taskID,
+  ));
 
   header('Location: ../staffDashboard.php');
   exit();

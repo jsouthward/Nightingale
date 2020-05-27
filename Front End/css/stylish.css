@@ -4,7 +4,11 @@ body {
   background-color: #ffffff;
 }
 
-a {outline : none; color: white;text-align: center;}
+.ui-accordion .ui-accordion-content {
+  padding: 2vw;
+}
+
+a {outline : none; color: white;text-align: center; text-decoration: none}
 h1 {position: relative; right: 10px; font-family: 'Calistoga', cursive;color: white; text-align: center; padding-bottom: 6vh;}
 h2 {font-size: 5vw;text-align: center;}
 p {font-size: 3.5vw;font-weight: bold;}
@@ -37,6 +41,9 @@ h2 img {
 
 .splitCol {
   display: flex;
+}
+.spaceBetween {
+  justify-content: space-between;
 }
 
 .buttonSplit {
@@ -194,7 +201,7 @@ header {
   text-align: left;
 }
 header img {
-  width: 15vw;
+  width: 64px;
 }
 header .wrap {
   padding-bottom: 0;
@@ -349,6 +356,9 @@ header .wrap {
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
+}
+.saveSettings {
+  background-image: linear-gradient(to top right, #0890e4, #13cde7);
 }
 
 /* Staff Dashboard */
@@ -583,6 +593,39 @@ option.avatar {
   background-position: left top;
 }
 
+.adminAddUser h2, .adminAddUser p {
+  text-align: left;
+}
+
+/* user settings */
+
+#player {
+  display:none;
+}
+
+.infoBtn {
+  border: none;
+  margin: 0;
+  background: transparent;
+  /*background-image: url(../images/info.png);*/
+  background-image: url(../images/audio.png);
+  height: 24px;
+  padding: 0;
+  width: 24px;
+  position: relative;
+  top: 4px;
+  
+}
+.infoForm {
+  padding: 0;
+  display: inline-block;
+  background: transparent;
+}
+
+.borderBlue {
+  border: 2px solid #0062ff;
+  background: white;
+}
 
 /* glucose logging chart */
 

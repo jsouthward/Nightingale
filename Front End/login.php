@@ -59,7 +59,7 @@ catch (PDOException $error){
   <title>Log In</title>
   <meta name="description" content="Dashboard">
   <meta name="author" content="W15024065">
-  <meta name="viewport" content="width=device-width, initial-scale=0.95">
+  <meta name="viewport" content="width=device-width, initial-scale=0.95, user-scalable=no">
   <link rel="stylesheet" href="css/stylish.css">
   <link href="https://fonts.googleapis.com/css?family=Calistoga|Montserrat:400,700&display=swap" rel="stylesheet">
   <style>
@@ -81,8 +81,8 @@ catch (PDOException $error){
         <h2>Sign in</h2>
         <span class="accentColor"><p>Please enter your email and password</p></span>
         <div class="formWrap">
-          <input value="jsouthward@email.com" type="email" name="email" id="name" placeholder="Email" tabindex="1"/>
-          <input value="password" type="password" name="password" id="name" placeholder="Password" tabindex="2"/>  
+          <input type="email" name="email" id="name" placeholder="Email" tabindex="1"/>
+          <input type="password" name="password" id="name" placeholder="Password" tabindex="2"/>  
         </div>
         <?php 
         if(isset($message)){

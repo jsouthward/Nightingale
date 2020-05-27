@@ -16,9 +16,15 @@ try{
   $currentTime = time();
   $newTask = "
     INSERT INTO nightingale_alert (timeCreated, locationID, userID, requestID) 
-    VALUES ('$currentTime','$userLocation','$userID','$requestID');
+    VALUES (:currentTime,:userLocation,:userID,:requestID);
   ";
-  $newTaskQuery = $dbConn->exec($newTask);
+  $newTaskQuery = $dbConn->prepare($newTask);
+  $newTaskQuery->execute(array(
+    'currentTime' => $currentTime,
+    'userLocation' => $userLocation,
+    'userID' => $userID,
+    'requestID' => $requestID,
+  ));
   
   
   header('Location: ../userRequest.php');

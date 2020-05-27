@@ -26,7 +26,7 @@ if(isset($_GET["t"])){
   <title>Glucose</title>
   <meta name="description" content="Dashboard">
   <meta name="author" content="W15024065">
-  <meta name="viewport" content="width=device-width, initial-scale=0.95">
+  <meta name="viewport" content="width=device-width, initial-scale=0.95, user-scalable=no">
   <link rel="stylesheet" href="css/stylish.css">
   <link href="https://fonts.googleapis.com/css?family=Calistoga|Montserrat:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

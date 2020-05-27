@@ -13,9 +13,12 @@ try{
 
   $sql = "
   DELETE FROM nightingale_request
-    WHERE requestID = '$requestID'
+    WHERE requestID = :requestID
   ";
-  $deleteQuery = $dbConn->query($sql);
+  $deleteQuery = $dbConn->prepare($sql);
+  $deleteQuery->execute(array(
+    'requestID' => $requestID,
+  ));
   if ($deleteQuery === false) {
     header('Location: ../adminDashboard.php');
     exit();

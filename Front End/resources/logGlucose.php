@@ -20,9 +20,13 @@ try{
   $dbConn = getConnection();
   $newReading = "
     INSERT INTO nightingale_glucose (userID, readingTime, readingDate, readingData) 
-    VALUES ('$userID','$currentTime','$currentDate','$readingData');
+    VALUES (:userID, '$currentTime','$currentDate',:readingData);
   ";
-  $newReadingQuery = $dbConn->exec($newReading);
+  $newReadingQuery = $dbConn->prepare($newReading);
+  $newReadingQuery->execute(array(
+    'userID' => $userID,
+    'readingData' => $readingData,
+  ));
   
   header('Location: ' . $_SERVER['HTTP_REFERER']);
   exit();

@@ -14,7 +14,7 @@ if(!isset($_SESSION["staffID"])){
   <title>Nightingale Dash</title>
   <meta name="description" content="Dashboard">
   <meta name="author" content="W15024065">
-  <meta name="viewport" content="width=device-width, initial-scale=0.95">
+  <meta name="viewport" content="width=device-width, initial-scale=0.95, user-scalable=no">
   <link rel="stylesheet" href="css/stylish.css">
   <link href="https://fonts.googleapis.com/css?family=Calistoga|Montserrat:400,700&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
